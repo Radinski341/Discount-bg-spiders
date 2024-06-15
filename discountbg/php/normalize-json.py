@@ -16,7 +16,7 @@ def find_json_files(folder_path):
         print(f"Error: Unable to find JSON files in '{folder_path}' - {e}")
 
 # Replace 'your_folder_path' with the actual path to your folder containing JSON files
-folder_path = 'discountbg/data/'
+folder_path = '/home/kire/learning/python/discountbg/discountbg/data/'
 json_files_array = find_json_files(folder_path)
 
 def read_and_save_two_lines(file_path):
@@ -70,7 +70,7 @@ output_directory = '/home/kire/Documents/Discount-bg/data/'
 if json_files_array:
     remove_all_files(output_directory)
     for file in json_files_array:
-        file_path = 'discountbg/data/' + file
+        file_path = '/home/kire/learning/python/discountbg/discountbg/data/' + file
         
         data_groups = read_and_save_two_lines(file_path)
 

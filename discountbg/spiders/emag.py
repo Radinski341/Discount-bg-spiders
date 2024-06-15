@@ -30,9 +30,9 @@ class EmagSpider(scrapy.Spider):
 
 
     def follow_next_category(self, response):
-        products = response.xpath("//div[@class='card-v2-badge badge-discount']/ancestor::div[@class='card-v2']//div[@class='card-v2-info']/a/@href")
+        products = response.xpath("//div[@class='card-v2-badge badge-discount']/ancestor::div[@class='card-v2']//div[@class='card-v2-info ']/a/@href")
         base_url = "https://www.emag.bg"
-        next_page = response.xpath("//a[@class='js-change-page js-next-page']/@href").get()
+        next_page = response.xpath("//a[@class='js-change-page']/@href").get()
     
 
         for product in products:
@@ -119,3 +119,5 @@ class EmagSpider(scrapy.Spider):
                 'images': imageUrls, 
                 'discount-percent': response.xpath("//div[@class='card-v2-badge badge-discount']/text()").get()  
             }
+
+# scrapy crawl emag -O ../data/emag.json
