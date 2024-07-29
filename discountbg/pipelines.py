@@ -12,27 +12,48 @@ class DiscountbgPipeline:
     def process_item(self, item, spider):
 
         adapter = ItemAdapter(item)
-
         field_names = adapter.field_names()
+        
+
+        if spider.name == 'emag':
+            # Additional logic for emag spider
+            pass  # Add emag specific logic here if needed
+        
+        elif spider.name == 'makasa':
+            for field_name in field_names:
+                if 'price' in field_name:
+                    value = adapter.get(field_name)
+                    if value:
+                        adapter[field_name] = value.replace(' ', '')
+                        adapter[field_name] = value.split(',')[0]
+        
+        self.apply_global_logic(adapter, field_names)
+            
+          
+        return item
+    
+    def apply_global_logic(self, adapter, field_names):
         for field_name in field_names:
             if 'price' in field_name:
                 value = adapter.get(field_name)
-                if(value):
+                if value:
                     value = value.replace('лв', '')
                     value = value.replace('ПЦД:\xa0', '')
                     value = value.replace('.', '')
                     adapter[field_name] = float(value)
             if 'discount-percent' in field_name:
                 value = adapter.get(field_name)
-                if(value):
+                if value:
                     value = value.replace('%', '')
                     value = value.replace('-', '')
                     value = value.replace('лв.', '')
                     adapter[field_name] = float(value)
                 else:
-                    value = (adapter.get('old-price') - adapter.get('new-price')) / adapter.get('old-price') * 100
-                    value = math.ceil(value)
-                    adapter[field_name] = float(value)
-          
-        return item
+                    old_price = adapter.get('old-price')
+                    new_price = adapter.get('new-price')
+                    if old_price and new_price:
+                        value = (old_price - new_price) / old_price * 100
+                        value = math.ceil(value)
+                        adapter[field_name] = float(value)
+           
         
