@@ -15,7 +15,7 @@ class MakasaSpider(scrapy.Spider):
         "https://makasa.org/category/grim?per_page=90",
         "https://makasa.org/category/slancezashtitni-produkti?per_page=90",
         "https://makasa.org/category/za-mama-i-bebe?per_page=90",
-        "https://makasa.org/category/kozmetika-za-maje?per_page=90 6933"
+        "https://makasa.org/category/kozmetika-za-maje?per_page=90"
     ]
 
     def parse(self, response):
